@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExpenseTracker.Models;
 using Syncfusion.EJ2.Grids;
+using System.IO;
+
 
 namespace ExpenseTracker.Controllers
 {
@@ -41,15 +43,47 @@ namespace ExpenseTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit([Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
+        public async Task<IActionResult> AddOrEdit([Bind("TransactionId,CategoryId,Amount,Note,Date,File")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
                 if (transaction.TransactionId == 0)
+                {
+                    if (transaction.File != null)
+                    {
+                        FileStream fs = null;
+                        try
+                        {
+                            int bufferSize = 1024 * 1024;
+                            using (FileStream fileStream = new FileStream("D:\\ExpenseTracker\\" + transaction.File.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                            {
+                                fs = new FileStream("C:\\Users\\ricar\\Downloads\\" + transaction.File.FileName, FileMode.Open, FileAccess.ReadWrite);
+                                fileStream.SetLength(fs.Length);
+                                int bytesRead = -1;
+                                byte[] bytes = new byte[bufferSize];
+
+                                while ((bytesRead = fs.Read(bytes, 0, bufferSize)) > 0)
+                                {
+                                    fileStream.Write(bytes, 0, bytesRead);
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            if (fs != null)
+                            {
+                                fs.Dispose();
+                            }
+                        }
+                        
+                    }
                     _context.Add(transaction);
+                }
                 else
+                {
                     _context.Update(transaction);
-                await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
             PopulateCategories();

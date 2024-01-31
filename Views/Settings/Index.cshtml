@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ExpenseTracker.Models.Settings
+
+@{
     ViewData["PageTitle"] = "Settings";
 }
 
@@ -21,7 +23,11 @@
                 <div class="mb-3">
                     <ejs-numerictextbox id="amount" 
                                         placeholder="Amount" floatLabelType="Always"
-                                        min=0 format="c2"></ejs-numerictextbox>                  
+                                        min=0 format="c2" currency="EUR"></ejs-numerictextbox>                  
+                </div>
+                <div class="mb-3">
+                    <ejs-textbox id="invoicePath" placeholder="invoices path" ejs-for="InvoicesPaths"
+                                 floatLabelType="Always" multiline="true"></ejs-textbox>
                 </div>
               
                 <ejs-button id="submit" type="submit" content="Submit" cssClass="e-success"></ejs-button>

@@ -20,6 +20,9 @@ namespace ExpenseTracker.Models
         public string? Note { get; set; } = "";
 
         public DateTime Date { get; set; } = DateTime.Now;
+        
+        [NotMapped]
+        public IFormFile File { get; set; }
 
         [NotMapped]
         public string? CategoryTitleWithIcon
