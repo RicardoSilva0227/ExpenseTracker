@@ -2,6 +2,8 @@
 using ExpenseTracker.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System;
 
 
 namespace ExpenseTracker.Controllers
@@ -47,6 +49,7 @@ namespace ExpenseTracker.Controllers
                         helper.importFile(transaction.File);
                     }
                     _context.Add(transaction);
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
