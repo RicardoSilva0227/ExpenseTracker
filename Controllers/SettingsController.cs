@@ -26,17 +26,17 @@ namespace ExpenseTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveSettings(Models.Settings settings)
+        public async Task<IActionResult> SaveSettings([Bind("SettingsId,InvoicesPath")] Models.Settings settings)
         {
             if (ModelState.IsValid)
             {
                 if (settings.SettingsId == 0)
                     _context.Add(settings);
-                else                
+                else
                     _context.Update(settings);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));                
+                return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
         }
