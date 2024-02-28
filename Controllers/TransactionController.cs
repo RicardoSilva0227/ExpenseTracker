@@ -42,11 +42,18 @@ namespace ExpenseTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<Category> categoriesList = _context.Categories.ToList();
                 if (transaction.TransactionId == 0)
-                {
+                {                    
                     if (transaction.File != null)
                     {
-                        helper.importFile(transaction.File);
+                        //can use some refactoring, there's no need to repeat code
+                        var categoryName = categoriesList.Where(c => c.CategoryId == transaction.CategoryId)
+                                                        .Select(c => c.Title)
+                                                        .FirstOrDefault();
+                        helper.createFolderForInvoice(categoryName);
+                        string folderPath = helper.folderPath(categoryName);
+                        helper.importFile(folderPath, transaction.File);
                     }
                     _context.Add(transaction);
                     await _context.SaveChangesAsync();
@@ -55,7 +62,13 @@ namespace ExpenseTracker.Controllers
                 {
                     if (transaction.File != null)
                     {
-                        helper.importFile(transaction.File);
+                        //can use some refactoring, there's no need to repeat code
+                        var categoryName = categoriesList.Where(c => c.CategoryId == transaction.CategoryId)
+                                                       .Select(c => c.Title)
+                                                       .FirstOrDefault();
+                        helper.createFolderForInvoice(categoryName);
+                        string folderPath = helper.folderPath(categoryName);
+                        helper.importFile(folderPath, transaction.File);
                     }
                     _context.Update(transaction);
                     await _context.SaveChangesAsync();
@@ -66,7 +79,6 @@ namespace ExpenseTracker.Controllers
             return View(transaction);
         }
 
-        // POST: Transaction/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

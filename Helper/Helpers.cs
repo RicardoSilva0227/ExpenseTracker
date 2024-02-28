@@ -3,13 +3,13 @@ namespace ExpenseTracker.Helper
 {
     public class Helpers
     {
-        public void importFile(IFormFile file)
+        public void importFile(string path, IFormFile file)
         {
             FileStream fs = null;
             try
             {
                 int bufferSize = 1024 * 1024;
-                using (FileStream fileStream = new FileStream("D:\\ExpenseTracker\\" +  file.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                using (FileStream fileStream = new FileStream(path +  file.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
                     fs = new FileStream("C:\\Users\\ricar\\Downloads\\" + file.FileName, FileMode.Open, FileAccess.ReadWrite);
                     fileStream.SetLength(fs.Length);
@@ -29,6 +29,20 @@ namespace ExpenseTracker.Helper
                     fs.Dispose();
                 }
             }
+        }
+
+        public void createFolderForInvoice(string newFolder) 
+        {
+            string rootFolder = "D:\\ExpenseTracker\\" + newFolder;
+            if (!Directory.Exists(rootFolder))
+            {
+                Directory.CreateDirectory(rootFolder);
+            }
+        }
+
+        public string folderPath(string newFolder)
+        {
+            return "D:\\ExpenseTracker\\" + newFolder;
         }
     }
 }
