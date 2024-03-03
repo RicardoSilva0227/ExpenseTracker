@@ -42,7 +42,7 @@ namespace ExpenseTracker.Helper
 
         public string folderPath(string newFolder)
         {
-            return "D:\\ExpenseTracker\\" + newFolder;
+            return "D:\\ExpenseTracker\\" + newFolder + "\\";
         }
     }
 }
