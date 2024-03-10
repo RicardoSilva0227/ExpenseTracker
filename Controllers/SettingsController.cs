@@ -45,10 +45,12 @@ namespace ExpenseTracker.Controllers
         [NonAction]
         private void PopulateCurrencies()
         {
-            List<string> currencies = new List<string>();
-            currencies.Add("Select a currency.");
-            currencies.Add("€");
-            currencies.Add("$");
+            List<string> currencies = new List<string>()
+            {
+                "Select a currency.",
+                "€",
+                "$"
+            };
             ViewBag.Currencies = currencies;
         }
     }
