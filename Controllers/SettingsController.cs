@@ -17,6 +17,7 @@ namespace ExpenseTracker.Controllers
         //ToDo: change from hardcoded to dynamic when possible
         public async Task<IActionResult> Index(int id = 1)
         {
+            PopulateCurrencies();
             if (id == 0)
                 return View(new Models.Settings());
             else
@@ -39,6 +40,16 @@ namespace ExpenseTracker.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        [NonAction]
+        private void PopulateCurrencies()
+        {
+            List<string> currencies = new List<string>();
+            currencies.Add("Select a currency.");
+            currencies.Add("€");
+            currencies.Add("$");
+            ViewBag.Currencies = currencies;
         }
     }
 }

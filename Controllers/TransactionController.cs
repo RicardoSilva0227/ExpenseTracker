@@ -1,9 +1,7 @@
-﻿using ExpenseTracker.Models;
-using ExpenseTracker.Helper;
+﻿using ExpenseTracker.Helper;
+using ExpenseTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System;
 
 
 namespace ExpenseTracker.Controllers
