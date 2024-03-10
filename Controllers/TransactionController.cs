@@ -54,6 +54,8 @@ namespace ExpenseTracker.Controllers
                         helper.createFolderForInvoice(categoryName);
                         string folderPath = helper.folderPath(categoryName);
                         helper.importFile(folderPath, transaction.File);
+                        // need to get some way of removing this line of code, have the felling I can make this look better.
+                        transaction.invoicePath = folderPath + transaction.File.Name;
                     }
                     _context.Add(transaction);
                     await _context.SaveChangesAsync();
@@ -69,6 +71,8 @@ namespace ExpenseTracker.Controllers
                         helper.createFolderForInvoice(categoryName);
                         string folderPath = helper.folderPath(categoryName);
                         helper.importFile(folderPath, transaction.File);
+                        // need to get some way of removing this line of code, have the felling I can make this look better.
+                        transaction.invoicePath = folderPath + transaction.File.Name;
                     }
                     _context.Update(transaction);
                     await _context.SaveChangesAsync();

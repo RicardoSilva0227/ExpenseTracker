@@ -20,8 +20,11 @@ namespace ExpenseTracker.Models
         public string? Note { get; set; } = "";
 
         public DateTime Date { get; set; } = DateTime.Now;
-
         
+        [Column(TypeName = "nvarchar(255)")]
+        public string invoicePath { get; set; }
+
+
         [NotMapped]
         public IFormFile File { get; set; }
 
