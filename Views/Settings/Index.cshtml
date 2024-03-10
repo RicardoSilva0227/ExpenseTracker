@@ -13,13 +13,13 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="mb-3">
-                    <ejs-dropdownlist id="ddlCategory" ejs-for="CurrencyOption"
-                                      placeholder="Category" dataSource="@ViewBag.Currencies"
+                    <ejs-dropdownlist id="ddlCurrency" ejs-for="CurrencyId"
+                                      placeholder="Currency" dataSource="@ViewBag.Currencies"
                                       floatLabelType="Always" allowFiltering="true" ignoreAccent="true"
                                       filterType="Contains" popupHeight="220px">
-                        <e-dropdownlist-fields value="CategoryId" text="TitleWithIcon"></e-dropdownlist-fields>
+                        <e-dropdownlist-fields value="CurrencyId" text="CurrencySymbolWithName"></e-dropdownlist-fields>
                     </ejs-dropdownlist>
-                    <span asp-validation-for="CurrencyOption" class="text-danger fs-6"></span>
+                    <span asp-validation-for="CurrencyId" class="text-danger fs-6"></span>
                 </div>
 
                 <div class="mb-3">

@@ -1,7 +1,5 @@
 ﻿using ExpenseTracker.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Configuration;
 
 namespace ExpenseTracker.Controllers
 {
@@ -15,7 +13,7 @@ namespace ExpenseTracker.Controllers
         }
 
         //ToDo: change from hardcoded to dynamic when possible
-        public async Task<IActionResult> Index(int id = 1)
+        public async Task<IActionResult> Index(int id)
         {
             PopulateCurrencies();
             if (id == 0)
@@ -45,13 +43,10 @@ namespace ExpenseTracker.Controllers
         [NonAction]
         private void PopulateCurrencies()
         {
-            List<string> currencies = new List<string>()
-            {
-                "Select a currency.",
-                "€",
-                "$"
-            };
-            ViewBag.Currencies = currencies;
+            var CurrencyCollection = _context.Currency.ToList();
+            Currency DefaultCurrency = new Currency() { CurrencyId = 0, CurrencyName = "Choose a Currency." };
+            CurrencyCollection.Insert(0, DefaultCurrency);
+            ViewBag.Currencies = CurrencyCollection;
         }
     }
 }

@@ -4,6 +4,7 @@ using ExpenseTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240310223916_updated database v0.6")]
+    partial class updateddatabasev06
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +78,7 @@ namespace ExpenseTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SettingsId"), 1L, 1);
 
-                    b.Property<int>("CurrencyId")
+                    b.Property<int>("CurrencyOption")
                         .HasColumnType("int");
 
                     b.Property<string>("InvoicesPaths")
@@ -86,8 +88,6 @@ namespace ExpenseTracker.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("SettingsId");
-
-                    b.HasIndex("CurrencyId");
 
                     b.ToTable("Settings");
                 });
@@ -146,17 +146,6 @@ namespace ExpenseTracker.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ExpenseTracker.Models.Settings", b =>
-                {
-                    b.HasOne("ExpenseTracker.Models.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Currency");
                 });
 
             modelBuilder.Entity("ExpenseTracker.Models.Transaction", b =>
